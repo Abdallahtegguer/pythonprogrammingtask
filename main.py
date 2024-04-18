@@ -18,5 +18,9 @@ def main():
     mapping_results = analysis.map_test_data(test_data, ideal_functions, best_functions, max_deviations)
     visualizer.plot_data(mapping_results, "Test Data Mapping Results")
 
+    except Exception as e:
+        print(f"Failed to execute analysis or data fetching: {e}")
+
+
 if __name__ == '__main__':
     main()
