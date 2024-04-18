@@ -14,10 +14,17 @@ class DataAnalysis:
                 train_col = f'y{i}'
                 sse += ((training_data[train_col] - ideal_functions[func]) ** 2).sum()
             results[func] = sse
+        except Exception as e:
+            print(f"Error calculating least squares: {e}")
+        
         return results
 
     def select_best_functions(self, sse_results):
-        return sorted(sse_results, key=sse_results.get)[:4]
+        try:
+            return sorted(sse_results, key=sse_results.get)[:4]
+        except Exception as e:
+            print(f"Error selecting best functions: {e}")
+            return []
 
     def map_test_data(self, test_data, ideal_functions, best_functions, max_deviations):
         mapping_results = []
@@ -36,6 +43,9 @@ class DataAnalysis:
                         break
             if not mapped:
                 mapping_results.append((x, y, 'None', None))  # Append a result for unmapped data points
+        except Exception as e:
+            print(f"Error mapping test data: {e}")
+        
         return mapping_results
 
 
@@ -49,4 +59,8 @@ class DataAnalysis:
                 ideal_y = ideal_functions.loc[ideal_functions['x'] == x, func].iloc[0]
                 deviations.append((y_values - ideal_y).abs().max())
             max_deviations[func] = max(deviations)
+
+        except Exception as e:
+            print(f"Error calculating max deviations for {func}: {e}")
+        
         return max_deviations
