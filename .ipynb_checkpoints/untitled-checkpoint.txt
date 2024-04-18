@@ -1,0 +1,61 @@
+previsou main : 
+from bokeh.plotting import figure, show, output_file
+from bokeh.models import ColumnDataSource, HoverTool
+
+def visualize_results(data, title="Data Visualization", file_name="data_visualization.html"):
+    output_file(file_name)  # Specifies the file to save the plot
+
+    # Prepare data for visualization
+    source = ColumnDataSource({
+        'x': [res[0] for res in data],
+        'y': [res[1] for res in data],
+        'function': [res[2] if res[2] else 'None' for res in data],
+        'deviation': [f"{res[3]:.2f}" if res[3] is not None else 'N/A' for res in data],
+        'color': ['green' if res[2] != 'None' else 'red' for res in data]
+    })
+
+    # Create a new plot with a title and axis labels
+    plot = figure(title=title, x_axis_label='X', y_axis_label='Y', plot_width=800, plot_height=400)
+
+    # Add a circle renderer with a size, color, and alpha
+    plot.circle(x='x', y='y', size=10, color='color', fill_alpha=0.5, source=source)
+
+    # Add hover tool
+    hover = HoverTool(tooltips=[
+        ("X", "@x"),
+        ("Y", "@y"),
+        ("Function", "@function"),
+        ("Deviation", "@deviation")
+    ])
+    plot.add_tools(hover)
+
+    # Show the results
+    show(plot)
+
+# Example usage
+# Assuming `mapping_results` is defined
+# visualize_results(mapping_results, "Test Data Mapping", "test_data_mapping.html")
+
+new main : 
+from database import DatabaseManager
+from analysis import DataAnalysis
+from visualization import Visualizer
+
+def main():
+    db_manager = DatabaseManager('sqlite:///my_data.db')
+    analysis = DataAnalysis(db_manager)
+    visualizer = Visualizer()
+
+    training_data = db_manager.fetch_data('training_data')
+    ideal_functions = db_manager.fetch_data('ideal_functions')
+    test_data = db_manager.fetch_data('test_data')
+
+    # Assuming the selection and deviation calculation logic is already implemented
+    best_functions = ['y48', 'y44', 'y50', 'y2']  # Placeholder for selected functions
+    max_deviations = {'y48': 1.0, 'y44': 1.1, 'y50': 1.2, 'y2': 0.9}  # Example deviations
+
+    mapping_results = analysis.map_test_data(test_data, ideal_functions, best_functions, max_deviations)
+    visualizer.plot_data(mapping_results, "Test Data Mapping Results")
+
+if __name__ == '__main__':
+    main()
