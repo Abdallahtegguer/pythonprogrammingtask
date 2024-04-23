@@ -5,3 +5,5 @@ the create test data.ipynb is file we used to create test_data table in to our d
 2- after we run our premain.py we found the best functions as following : Best functions selected: ['y48', 'y44', 'y50', 'y2']
 3- now we run the sedonc part of the code which is combined of main.py, analysis.py visualization.py, database.py.
 and then a window shows up to visualize the data points
+
+to run the tests use the following command : python -m unittest discover -s test 
