@@ -1,12 +1,14 @@
 from database import DatabaseManager
 from preanalysis import DataAnalysis
 from visualization import Visualizer
+#since we need first to find the ideal function we have this premain that inherites from prenalaysis.py to give us the ideal fucntions 
+# that we will be needing for our main and analysis.py file
 
 def main():
     try:
         db_manager = DatabaseManager('sqlite:///my_data.db')
         analysis = DataAnalysis(db_manager)
-        visualizer = Visualizer()
+        #visualizer = Visualizer()
 
         # Fetching data with error handling
         try:
@@ -30,7 +32,7 @@ def main():
         try:
             max_deviations = analysis.calculate_max_deviations(training_data, ideal_functions, best_functions)
             mapped_results = analysis.map_test_data(test_data, ideal_functions, best_functions, max_deviations)
-            visualizer.plot_data(mapped_results)  # Visualize the mapping results
+            #visualizer.plot_data(mapped_results)  # Visualize the mapping results
         except Exception as e:
             print(f"Error in mapping or visualization: {e}")
 

@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+# this preanalysis file is used to find the ideal functions it works together with the pre_main.py
+
 class DataAnalysis:
     def __init__(self, db_manager):
         self.db_manager = db_manager

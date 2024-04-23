@@ -1,6 +1,8 @@
 from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, HoverTool
 
+# this is our visualizer file that we tend to need to visualize our results after
+
 class Visualizer:
     def plot_data(self, mapping_results, title="Test Data Mapping Results"):
         output_file("mapping_results.html")  # Save the plot as an HTML file

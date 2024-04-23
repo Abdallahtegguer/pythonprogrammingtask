@@ -1,5 +1,7 @@
 import numpy as np
 
+# is analysis.py should we shouls run after running the pre_analysis.py file because the pre_analysis.py file is the one we are using to findn ideal functions
+
 class DataAnalysis:
     def __init__(self, db_manager):
         self.db_manager = db_manager
